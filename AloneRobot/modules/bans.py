@@ -115,23 +115,7 @@ def ban(update: Update, context: CallbackContext) -> str:
         )
         if reason:
             reply += f"\n<code> </code><b>•  ʀᴇᴀsᴏɴ:</b> \n{html.escape(reason)}"
-        bot.sendMessage(
-            chat.id,
-            reply,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="⚠️ Unban", callback_data=f"unbanb_unban={user_id}"
-                        ),
-                        InlineKeyboardButton(
-                            text="❌ Delete", callback_data="unbanb_del"
-                        ),
-                    ]
-                ]
-            ),
-            parse_mode=ParseMode.HTML,
-        )
+        bot.sendMessage(chat.id, reply, parse_mode=ParseMode.HTML)
         return log
 
     except BadRequest as excp:
@@ -203,7 +187,7 @@ def temp_ban(update: Update, context: CallbackContext) -> str:
 
     log = (
         f"<b>{html.escape(chat.title)}:</b>\n"
-        "#ᴛᴇᴍᴩ ʙᴀɴ\n"
+        "ᴛᴇᴍᴩ ʙᴀɴ\n"
         f"<b>ʙᴀɴɴᴇᴅ ʙʏ:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
         f"<b>ᴜsᴇʀ:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}\n"
         f"<b>ᴛɪᴍᴇ:</b> {time_val}"
@@ -216,19 +200,8 @@ def temp_ban(update: Update, context: CallbackContext) -> str:
         # bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
         bot.sendMessage(
             chat.id,
-            reply_msg,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="⚠️ Unban", callback_data=f"unbanb_unban={user_id}"
-                        ),
-                        InlineKeyboardButton(
-                            text="❌ Delete", callback_data="unbanb_del"
-                        ),
-                    ]
-                ]
-            ),
+            f"ʙᴀɴɴᴇᴅ! ᴜsᴇʀ {mention_html(member.user.id, html.escape(member.user.first_name))} "
+            f"ɪs ɴᴏᴡ ʙᴀɴɴᴇᴅ ғᴏʀ {time_val}.",
             parse_mode=ParseMode.HTML,
         )
         return log
