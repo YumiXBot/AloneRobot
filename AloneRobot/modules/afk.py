@@ -1,43 +1,35 @@
-"""
-MIT License
-
-Copyright (c) 2022 TEAMALONEOP 
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-"""
-
-# ""DEAR PRO PEOPLE,  DON'T REMOVE & CHANGE THIS LINE
-# TG :- @ALONE_WAS_BOT
-#     UPDATE   :- AloneXbots
-#     GITHUB :- TeamAloneOp ""
-
-
 import time
-
 from pyrogram import filters
 from pyrogram.types import Message
 
 from AloneRobot import pbot
+
 from AloneRobot.modules.no_sql.afk_db import add_afk, is_afk, remove_afk
+def get_readable_time(seconds: int) -> str:
+    count = 0
+    readable_time = ""
+    time_list = []
+    time_suffix_list = ["s", "ᴍ", "ʜ", "ᴅᴀʏs"]
 
+    while count < 4:
+        count += 1
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
+        if seconds == 0 and remainder == 0:
+            break
+        time_list.append(int(result))
+        seconds = int(remainder)
 
-@pbot.on_message(filters.command(["afk", "brb"]))
+    for x in range(len(time_list)):
+        time_list[x] = str(time_list[x]) + time_suffix_list[x]
+    if len(time_list) == 4:
+        readable_time += time_list.pop() + ", "
+
+    time_list.reverse()
+    readable_time += ":".join(time_list)
+
+    return readable_time
+
+@pbot.on_message(filters.command(["afk", "brb","bye"]))
 async def active_afk(_, message: Message):
     if message.sender_chat:
         return
@@ -83,11 +75,8 @@ async def active_afk(_, message: Message):
                         photo=f"downloads/{user_id}.jpg",
                         caption=f"**{message.from_user.first_name}** ɪs ʙᴀᴄᴋ ᴏɴʟɪɴᴇ ᴀɴᴅ ᴡᴀs ᴀᴡᴀʏ ғᴏʀ {seenago}\n\nʀᴇᴀsᴏɴ: `{reasonafk}`",
                     )
-        except Exception:
-            send = await message.reply_text(
-                f"**{message.from_user.first_name}** ɪs ʙᴀᴄᴋ ᴏɴʟɪɴᴇ",
-                disable_web_page_preview=True,
-            )
+        except Exception as e:
+            print(e)
 
     if len(message.command) == 1 and not message.reply_to_message:
         details = {
@@ -188,23 +177,15 @@ async def active_afk(_, message: Message):
         }
 
     await add_afk(user_id, details)
-    await message.reply_sticker(
-        "CAACAgUAAx0CUgguZAABAdegY2N5paaiPapUxRm0RYy9Xf6dPEYAAisIAAJ2PRlXxkn7UgOIdewqBA"
-    )
+    
     await message.reply_text(f"{message.from_user.first_name} ɪs ɴᴏᴡ ᴀғᴋ!")
 
+__help__ = """
 
-__mod_name__ = "Aғᴋ"
-
-
-# ғᴏʀ ʜᴇʟᴘ ᴍᴇɴᴜ
-
-# """
-from AloneRobot.modules.language import gs
-
-
-def get_help(chat):
-    return gs(chat, "afk_help")
-
-
-# """
+*ᴀᴡᴀʏ ғʀᴏᴍ ɢʀᴏᴜᴘ*
+ ❍ /afk <reason>*:* ᴍᴀʀᴋ ʏᴏᴜʀsᴇʟғ ᴀs ᴀғᴋ(ᴀᴡᴀʏ ғʀᴏᴍ ᴋᴇʏʙᴏᴀʀᴅ).
+ ❍ /brb <ʀᴇᴀsᴏɴ>*:* sᴀᴍᴇ ᴀs ᴛʜᴇ ᴀғᴋ ᴄᴏᴍᴍᴀɴᴅ 
+ᴡʜᴇɴ ᴍᴀʀᴋᴇᴅ ᴀs ᴀғᴋ, ᴀɴʏ ᴍᴇɴᴛɪᴏɴs ᴡɪʟʟ ʙᴇ ʀᴇᴘʟɪᴇᴅ ᴛᴏ ᴡɪᴛʜ ᴀ ᴍᴇssᴀɢᴇ ᴛᴏ sᴀʏ ʏᴏᴜ'ʀᴇ ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ!
+ 
+"""
+__mod_name__ = "Aꜰᴋ"
