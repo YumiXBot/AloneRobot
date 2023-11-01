@@ -34,7 +34,6 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from AloneRobot import pbot
-from AloneRobot.modules.helper_funcs.readable_time import get_readable_time
 from AloneRobot.modules.no_sql.afk_db import add_afk, is_afk, remove_afk
 
 
