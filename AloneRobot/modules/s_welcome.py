@@ -4,7 +4,7 @@ from pyrogram import *
 from pyrogram.types import *
 from logging import getLogger
 
-from AloneRobot import app, LOG_CHANNEL_ID
+from AloneRobot import app, EVENT_LOGS
 from AloneRobot.database.wel_db import *
 from AloneRobot.Config import COMMAND_HANDLER
 
@@ -137,7 +137,7 @@ Usᴇʀɴᴀᴍᴇ: @{user.username}
 async def bot_wel(_, message):
     for u in message.new_chat_members:
         if u.id == app.me.id:
-            await app.send_message(LOG_CHANNEL_ID, f"""
+            await app.send_message(EVENT_LOGS, f"""
 **Nᴇᴡ Gʀᴏᴜᴘ
 ➖➖➖➖➖➖➖➖➖➖➖➖
 Nᴀᴍᴇ: {message.chat.title}
