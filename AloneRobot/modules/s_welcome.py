@@ -147,7 +147,7 @@ Usᴇʀɴᴀᴍᴇ: @{message.chat.username}
 """)
             
 
-__mod__ = "Sᴡᴇʟᴄᴏᴍᴇ"
+__mod_name__ = "Sᴡᴇʟᴄᴏᴍᴇ"
 __help__ = """
 **» /swelcome** - Turn On The Special Welcome For Groups
 """
