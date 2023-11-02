@@ -6,7 +6,6 @@ from logging import getLogger
 
 from AloneRobot import pbot as app, EVENT_LOGS
 from AloneRobot.database.wel_db import *
-from AloneRobot.Config import COMMAND_HANDLER
 
 LOGGER = getLogger(__name__)
 
