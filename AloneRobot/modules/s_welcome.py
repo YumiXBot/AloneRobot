@@ -50,7 +50,7 @@ def welcomepic(pic, user, chat, id, uname):
     return f"downloads/welcome#{id}.png"
 
 
-@app.on_message(filters.command("swelcome") & ~filters.private)
+@app.on_message(filters.command("swelcome", prefixes=["/", "!"]) & ~filters.private)
 async def auto_state(_, message):
     usage = "**Usage:**\n/swelcome [ENABLE|DISABLE]"
     if len(message.command) == 1:
