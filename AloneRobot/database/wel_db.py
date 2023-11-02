@@ -1,6 +1,6 @@
 from AloneRobot.database import *
 
-wlcm = dbname["welcome"]
+wlcm == ["welcome"]
 
 async def add_wlcm(chat_id : int):
     return await wlcm.insert_one({"chat_id" : chat_id})
