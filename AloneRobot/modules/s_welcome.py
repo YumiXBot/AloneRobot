@@ -4,7 +4,7 @@ from pyrogram import *
 from pyrogram.types import *
 from logging import getLogger
 
-from AloneRobot import app, EVENT_LOGS
+from AloneRobot import pbot as app, EVENT_LOGS
 from AloneRobot.database.wel_db import *
 from AloneRobot.Config import COMMAND_HANDLER
 
